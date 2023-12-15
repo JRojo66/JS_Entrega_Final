@@ -1,0 +1,74 @@
+img{
+    margin: 1%;
+    width: 10vw;
+    height: 5vh;
+}
+
+.pagina{
+    display: flex; /* Establece la distribucion de los buscadores y los cards en la pagina*/
+    flex-direction: row; /* Esteblece que los buscadores se muestren al costado de la pagina*/
+    justify-content: space-between; /* Establece que los buscadores y los cards se ubiquen lo mas apartados que sea posible en la pagina*/
+    gap: 5vw; /* Establece la separacion minima entre los buscadores y los cards*/
+}
+
+/*Establece la disposicion de las cards*/
+.cards {
+    display: flex; /* Establece que las cards se muestren en flexbox*/
+    flex-direction: row; /* Establece que se muestren una al lado de la otra */
+    justify-content: start; /*Establece que se muestren las cards comenzando desde la izquierda*/
+    flex-wrap: wrap; /* EStablece que si las cards no caben el en ancho de la pantalla, pasen hacia abajo*/
+    gap: 1vw;
+}
+
+.card{
+    width: 220px;
+    border: 1px solid black; /* Establece una linea de 1px alrededor de cada card*/
+    border-radius: 20px; /* Redondea las esquinas de cada card*/
+    display: flex; /* Establece la disposicion de los elementos dentro de cada card*/
+    flex-direction: column; /* Establece que los elementos dentro de cada card esten encolumnados*/
+    align-items: center; /* Centra los elementos dentro de cada card*/
+}
+
+
+.cardcarrito{
+    width: 220px;
+    border: 1px solid black; /* Establece una linea de 1px alrededor de cada card*/
+    border-radius: 20px; /* Redondea las esquinas de cada card*/
+    display: flex; /* Establece la disposicion de los elementos dentro de cada card*/
+    flex-direction: column; /* Establece que los elementos dentro de cada card esten encolumnados*/
+    align-items: center; /* Centra los elementos dentro de cada card*/
+}
+
+
+.foto{
+    height: 100px; /* Establece el alto de la foto del producto*/
+    width: 100px; /* Establece el ancho de la foto del producto*/
+}
+
+h1{
+    font-size: 18px; /* Establece el tamaño de la letra del texto del articulo*/
+}
+
+h2{
+    font-size: 16px; /* Establece el tamaño de la letra de la descripcion del articulo*/
+}
+
+#buscadorProducto{
+    font-size: 18px; /* Establece el tamaño de la letra del placeholder del buscador de productos*/
+    height: 5vh; /* Establece el alto del buscador de productos*/
+    width: 18vw; /* Establece el ancho del buscador de productos*/
+    margin-bottom: 2vh; /*Establece la separacion entre el buscador de produtos y el texto "Ingrese el producto buscado"*/
+    margin-left: 2vw; /* Establece la separacion entre el buscador de productos y el margen izquierdo*/
+}
+
+p, .cbox{
+    font-size: 18px; /* Establece el tamaño de la letra del texto "Ingrese el producto buscado"*/
+    margin-left: 2vw; /* Establece el margen izquirdo de los buscadores*/
+}
+
+.carrito{
+    width: 20 vw;
+}
+.textoCarrito{
+    margin-right: 5vw;;
+}
