@@ -1,48 +1,16 @@
 // AREA DE DEFINCION DE PRODUCTOS
 //Tablas
+
+// Area de definicion de variables
 let carrito = [];
+let productos=[];
 const localStorage = window.localStorage;
 
-// const productos = [
-//     { articulo: "Wave Custom 4 Pro",  categoria: "Tabla", subcategoria: "Wave", descripcion: "Surfwave Quad", foto:"images/tablas/2022_Goya_Windsurfing_Custom_4_Pro_rev2.jpg", precio:2300},
-//     { articulo: "Wave Custom 3 Pro",  categoria: "Tabla", subcategoria: "Wave", descripcion: "Surfwave Thruster", foto:"images/tablas/2022_Goya_Windsurfing_Custom_3_Pro_rev2.jpg", precio:2200},
-//     { articulo: "Wave Nitro 3 Pro",  categoria: "Tabla", subcategoria: "Wave", descripcion: "Compact Thruster", foto:"images/tablas/2022_Goya_Windsurfing_Nitro_3_Pro_rev2.jpg", precio:2350},
-//     { articulo: "Freewave One 3 Carbon",  categoria: "Tabla", subcategoria: "Freewave", descripcion: "Freewave Thruster", foto:"images/tablas/2022_Goya_Windsurfing_One_3_Carbon_rev2.jpg", precio:2450},
-//     { articulo: "Freestyle Air Pro",  categoria: "Tabla", subcategoria: "Freestyle", descripcion: "Freestyle Single", foto:"images/tablas/2022_Goya_Windsurfing_Air_Pro_rev2.jpg", precio:2500},
-//     { articulo: "Foil Airbolt carbon",  categoria: "Tabla", subcategoria: "Foil", descripcion: "Wind/Wing Foilboard", foto:"images/tablas/2022_Goya_Windsurfing_Airbolt_Carbon.jpg", precio:2700},
-//     { articulo: "Foil Proton Pro",  categoria: "Tabla", subcategoria: "Race", descripcion: "Race Single", foto:"images/tablas/2021_Boards_proton_pro4_rendering.jpg", precio:2600},
-//     { articulo: "Foil Bolt 4 Carbon",  categoria: "Tabla", subcategoria: "Foil", descripcion: "Freerace", foto:"images/tablas/bolt_carbon.jpg", precio:2750},
-//     { articulo: "Freestyle Race Proton Pro",  categoria: "Tabla", subcategoria: "Freestyle", descripcion: "Race Single", foto:"images/tablas/2021_Boards_proton_pro4_rendering (1).jpg", precio:2600},
-//     { articulo: "Freerace Bolt 4 Carbon",  categoria: "Tabla", subcategoria: "Freerace", descripcion: "Freerace", foto:"images/tablas/bolt_carbon (1).jpg", precio:2750},
-//     { articulo: "Freeride Volar Carbon",  categoria: "Tabla", subcategoria: "Freeride", descripcion: "Freeride Single", foto:"images/tablas/2022_Goya_Windsurfing_Volar_Carbon.jpg", precio:2450},
-//     { articulo: "Freeride Volar",  categoria: "Tabla", subcategoria: "Freeride", descripcion: "Freestyle Single", foto:"images/tablas/2022_Goya_Windsurfing_Volar.jpg", precio:2450},
-//     { articulo: "Youth Custom 4 Pro",  categoria: "Tabla", subcategoria: "Youth", descripcion: "Surfwave Quad", foto:"images/tablas/2022_Goya_Windsurfing_Custom_4_Pro_rev2 (1).jpg", precio:2300},
-//     { articulo: "Trainer Surf",  categoria: "Tabla", subcategoria: "Trainer", descripcion: "Trainer Single", foto:"images/tablas/2022_Goya_Windsurfing_Surf_220_rev3.jpg", precio:2100},
-// // Velas
-//     { articulo: "Wave Banzai Pro",  categoria: "Vela", subcategoria: "Wave", descripcion: "Powerwave 4 Batten", foto:"images/velas/2022_Goya_Windsurfing_Banzai_Pro_ROY.jpg", precio:900},
-//     { articulo: "Wave Banzai X Pro",  categoria: "Vela", subcategoria: "Wave", descripcion: "Powerwave 4 Batten", foto:"images/velas/2022_Goya_Windsurfing_Banzai_X_Pro_BBY.jpg", precio:950},
-//     { articulo: "Wave Fringe Pro",  categoria: "Vela", subcategoria: "Wave", descripcion: "Surfwave 3 Batten", foto:"images/velas/2022_Goya_Windsurfing_Fringe_Pro_ROY.jpg", precio:850},
-//     { articulo: "Wave Fringe X Pro",  categoria: "Vela", subcategoria: "Wave", descripcion: "Surfwave 3 Batten", foto:"images/velas/2022_Goya_Windsurfing_Banzai_Pro_ROY.jpg", precio:900},
-//     { articulo: "Wave Eclipse Pro",  categoria: "Vela", subcategoria: "Wave", descripcion: "Variowave 5 Batten", foto:"images/velas/2022_Goya_Windsurfing_Eclipse_Pro_YYW.jpg", precio:1000},
-//     { articulo: "Wave Guru X",  categoria: "Vela", subcategoria: "Wave", descripcion: "Controlwave 4 Batten", foto:"images/velas/2022_Goya_Windsurfing_Guru_X_BBY.jpg", precio:1050},
-//     { articulo: "Feestyle Cypher Pro",  categoria: "Vela", subcategoria: "Freestyle", descripcion: "Freestyle & Foil", foto:"images/velas/2022_Goya_Windsurfing_Cypher_Pro_YYP.jpg", precio: 1100},
-//     { articulo: "Foil Cypher Pro",  categoria: "Vela", subcategoria: "Foil", descripcion: "Freestyle & Foil", foto:"images/velas/2022_Goya_Windsurfing_Cypher_Pro_YYP (1) foil.jpg", precio: 1100},
-//     { articulo: "Foil Fringe Pro",  categoria: "Vela", subcategoria: "Foil", descripcion: "Surfwave 3 batten", foto:"images/velas/2022_Goya_Windsurfing_Fringe_X_Pro_BBY.jpg", precio: 850},
-//     { articulo: "Freerace Mark 2",  categoria: "Vela", subcategoria: "Freerace", descripcion: "Freerace 2 Cam 6 Batten", foto:"images/velas/2022_Goya_Windsurfing_Mark_2_FPY.jpg", precio: 1100},
-//     { articulo: "Freerace Mark B",  categoria: "Vela", subcategoria: "Freerace", descripcion: "Freerace 6 Batten", foto:"images/velas/2022_Goya_Windsurfing_Mark_B_YYP.jpg", precio: 1050},
-//     { articulo: "Freerace Mark X",  categoria: "Vela", subcategoria: "Freerace", descripcion: "Freerace 6 Batten", foto:"images/velas/2022_Goya_Windsurfing_Mark_X_BBY.jpg", precio: 1150},
-//     { articulo: "Freerace Mark",  categoria: "Vela", subcategoria: "Freerace", descripcion: "Freerace 6 Batten", foto:"images/velas/2022_Goya_Windsurfing_Mark_ROY.jpg", precio: 1000},
-//     { articulo: "Freeride Nexus B",  categoria: "Vela", subcategoria: "Freeride", descripcion: "Freeride 5 Batten", foto:"images/velas/2022_Goya_Windsurfing_Nexus_B_YYP.jpg", precio: 1200},
-//     { articulo: "Freeride Nexus",  categoria: "Vela", subcategoria: "Freeride", descripcion: "Freeride 5 Batten", foto:"images/velas/2022_Goya_Windsurfing_Nexus_BBY.jpg", precio: 1200},
-//     { articulo: "Youth Scion X",  categoria: "Vela", subcategoria: "Youth Scion X", descripcion: "Youth 3 Batten", foto:"images/velas/2022_Goya_Windsurfing_Scion_X_ROY.jpg", precio: 1200},
-//     { articulo: "Trainer Surf",  categoria: "Vela", subcategoria: "Trainer Surf", descripcion: "Trainer 1 to 3 Batten", foto:"images/velas/2022_Goya_Windsurfing_Surf_2_OOY.jpg", precio: 1200},
-// ];
-
-function ObtenerInformacionPersonaje(){
+// Trae los productos del archivo JSON/productos.json
+function ObtenerInformacionProductos(){
     return new Promise ((resolve,reject) => {
-        fetch(JSON/productos.json)
+        fetch('../JSON/productos.json')
         .then(response=>{
-            debugger
             if(!response.ok){ 
                 throw new Error("Error al cargar la API, comunicate con el administrador");                
             }
@@ -52,20 +20,19 @@ function ObtenerInformacionPersonaje(){
         .catch(error=>reject(error));
     })
 }
-
+// Crea los cards con la informacion de JSON/productos.json
 async function main(){
     try{
-        const informacionPersonaje = await ObtenerInformacionPersonaje()
-        debugger
-        console.log(informacionPersonaje) //crearCards(InformacionPersonaje) 
+        const informacionProductos = await ObtenerInformacionProductos()
+        mostrarProductos(informacionProductos) //crearCards(InformacionProductos) 
+        productos = informacionProductos; //Asigna el array de objetos "productos" a la variable "productos"
     }catch(error){
-        console.error("Error en la app",error)
+        console.error("Error en la app :",error)
     }
 }
 
-main()
+main(); 
 
-const productos = informacionPersonaje();
 
 // Agrega los productos a la pagina en cards. La clase contenedora es cards. La clase de cada card es card
 
@@ -89,76 +56,180 @@ productos.map(function(producto){ // Recorre el array de productos con un map. C
 
 mostrarProductos(productos)
 
+// Area de filtrado de productos
+// Los filtros de productos funcionan en tres niveles en cascada. Primero se filtra por categorias. El resultado se filtra por subcategorias, y este segundo resultado se filtra por el texto ingresado 
+
 // Llama a la funcion filtrar productos cuando el usuario escribe en el cuadro de dialogo de buscar producto o selecciona un checkbox
-let clave1 = document.getElementById("buscadorProducto"); // buscador
-clave1.addEventListener("input",filtrarProductos);
 
-let elementosFiltrar = ["tablas","velas","wave","freewave","freestyle","foil","race","freerace","freeride","youth","trainer"];
 
-elementosFiltrar.forEach(elemento => { // Checkbox
+
+
+    // Area de definicion de variables para filtrarProductos
+    let productosFiltradosCategorias = {};
+    let productosFiltrados = {};
+    let productosFiltrados1 = {};
+    let productosFiltrados2 = {}; 
+    let productosFiltradosSubcategorias = [];
+    let productosFiltradosWave = [];
+    let productosFiltradosFreewave = [];
+    let productosFiltrados4 = [];
+    let productosFiltradosb = [];
+    let productosFiltradosAc = [];  
+
+    let elementosFiltrarCategorias = ["Tabla","Vela","Wave","Freewave","Freestyle","Foil","Race","Freerace","Freeride","Youth","Trainer"]  
+    let elementosFiltrarSubcategorias = ["Wave","Freewave","Freestyle","Foil","Race","Freerace","Freeride","Youth","Trainer"];
+
+elementosFiltrarCategorias.forEach(elemento => { // Agrega los EventListeners para cuando se selecciona/deselecciona un Checkbox de Categoría
     const elementoDOM = document.getElementById(elemento);
     elementoDOM.addEventListener("input", () => filtrarProductos());
 });
 
+let clave1 = document.getElementById("buscadorProducto"); // cuando se selecciona/deselecciona el buscador
+clave1.addEventListener("input",filtrarProductos);
+
+
 function filtrarProductos(){
-
-    // Area de definicion de variables para filtrarProductos
-    let productosFiltrados = {};
-    let productosFiltrados2 = {};
-    let subcategoriasSeleccionadas = false;
-    let productosFiltradosb = [];
-    let productosFiltradosAc = [];  
-    let productosFiltrados3 = [];  
-
-// Los filtros de productos funcionan en tres niveles en cascada. Primero se filtra por categorias. El resultado se filtra por subcategorias, y este segundo resultado se filtra por el texto ingresado 
 
 
 // Primer nivel de filtro: por categoria
-tablas.checked? velas.checked? // Checkboxes tablas y velas marcados
-productosFiltrados = productos.filter(producto => 
-    producto.categoria==="Tabla"||producto.categoria==="Vela") : 
-    productosFiltrados = productos.filter(producto => // Solo checkbox tablas marcado
-    producto.categoria==="Tabla") : 
-velas.checked? // Solo checkbox velas marcado
-productosFiltrados = productos.filter(producto => 
-    producto.categoria==="Vela") : 
-    productosFiltrados = productos;   // Ni Tablas ni velas marcados
+let categoriasSeleccionadas = false; // Da valor inicial false a la variable categoriasSeleccionadas
+
+const checkboxTabla = document.getElementById("Tabla"); // Trae el contenido del checkbox Tabla
+
+if(checkboxTabla.checked){
+    productosFiltrados1 = productos.filter(producto => { // Si está activado por el usuario, filtra por la categoria Tabla y lo almacena en productosFiltrados1
+    return checkboxTabla.checked ? producto.categoria === "Tabla" : true;
+    });
+} else{
+    productosFiltrados1=[]; // Si no esta activado por el usuario, vacia el array
+}
+
+    if(productosFiltrados1.length>0){ // Si hay elementos filtrados, cambia el valor de la variable categoriasSeleccionada a true
+        categoriasSeleccionadas = true;
+    }
+
+
+const checkboxVelas = document.getElementById("Vela"); // Trae el contenido del checkbox Vela
+
+if (checkboxVelas.checked) { // Si está activado por el usuario, filtra por la categoria Vela y lo almacena en productosFiltrados2
+    productosFiltrados2 = productos.filter(producto => {
+        return checkboxVelas.checked ? producto.categoria === "Vela" : true;
+    });
+} else{
+    productosFiltrados2=[]; // Si no esta activado por el usuario, vacia el array
+}
+    if(productosFiltrados2.length>0){ // Si hay elementos filtrados, cambia el valor de la variable categoriasSeleccionada a true
+        categoriasSeleccionadas = true;
+    }
+
+if(categoriasSeleccionadas){ // Si hay categorias seleccionadas, concatena los arrays de las categorias selaccionadas. Tiene en cuenta que uno de ellos puede estar vacio
+productosFiltrados = [...(productosFiltrados1 || []), ...(productosFiltrados2 || [])];
+} else {
+    productosFiltrados = productos; 
+}
+
+
+// const contenedor = document.getElementById("Productos"); // Limpia el contenedor
+// contenedor.innerHTML = ""; // Limpia el contenedor
+//mostrarProductos(productosFiltrados); // muestra los productos filtrados -- ESTO SE VA CUANDO IMPLEMENTE LOS OTROS NIVELES DE FILTRO
 
 //    Segundo nivel de filtro: por subcategoria
 
-elementosFiltrar.forEach(elemento => {
-    const checkbox = document.getElementById(elemento.toLowerCase());
-    
-    if (checkbox.checked) {
-        const productosFiltradosSubcategoria = productosFiltrados.filter(producto =>
-            producto.subcategoria.toLowerCase() === elemento.toLowerCase()
-        );
+let subcategoriasSeleccionadas2 = false;
 
-        productosFiltradosAc = [...productosFiltradosAc, ...productosFiltradosSubcategoria];
-        subcategoriasSeleccionadas = true;
-    }
-});
+let elemento = "Wave";
 
-    if (subcategoriasSeleccionadas){
-        productosFiltrados2 = productosFiltradosAc // CArga el array productosFiltrados2 con los datos de todas las subcategorias seleccionadas
-    } else{ // No hay subcategorias seleccionadas
-        productosFiltrados2 = productosFiltrados; // Carga el array productosFiltrados2 con los datos del primer nivel de filtros.
-    }
-
-    // Tercer nivel de filtro: Por texto
-    if(clave1.value!=""){
-        productosFiltrados3 = productosFiltrados2.filter(producto => 
-        producto.articulo.toLowerCase().includes(clave1.value.toLowerCase())||producto.descripcion.toLowerCase().includes(clave1.value.toLowerCase())
-    );
-    } else {
-        productosFiltrados3 = productosFiltrados2;
-    }
-    const contenedor = document.getElementById("Productos");
-    contenedor.innerHTML = ""; // Limpiar el contenedor
-    mostrarProductos(productosFiltrados3); // Muestra los productos filtrados
+const checkboxWave = document.getElementById(elemento); // Trae el contenido del checkbox Wave
+if(checkboxWave.checked){
+    productosFiltradosWave = productosFiltrados.filter(producto => { // Si está activado por el usuario, filtra por la categoria Tabla y lo almacena en productosFiltrados1
+    return checkboxWave.checked ? producto.subcategoria === elemento : true;
+    });
+} else{
+    productosFiltradosWave= productosFiltrados; // Si el checkbox no esta activado por el usuario, no filtra
+}
+if(productosFiltradosWave.length>0){ // Si hay elementos filtrados, cambia el valor de la variable categoriasSeleccionada a true
+    subcategoriasSeleccionadas2 = true;
 }
 
+    if (subcategoriasSeleccionadas2){
+        productosFiltrados4 = productosFiltradosAc // CArga el array productosFiltrados2 con los datos de todas las subcategorias seleccionadas
+    } else{ // No hay subcategorias seleccionadas
+        productosFiltrados4 = productosFiltrados; // Carga el array productosFiltrados2 con los datos del primer nivel de filtros.
+    }
+
+
+    // let elemento = "Wave";
+
+    // const checkboxWave = document.getElementById(elemento); // Trae el contenido del checkbox Wave
+    // if(checkboxWave.checked){
+    //     productosFiltradosWave = productosFiltrados.filter(producto => { // Si está activado por el usuario, filtra por la categoria Tabla y lo almacena en productosFiltrados1
+    //     return checkboxWave.checked ? producto.subcategoria === elemento : true;
+    //     });
+    // } else{
+    //     productosFiltradosWave= productosFiltrados; // Si el checkbox no esta activado por el usuario, no filtra
+    // }
+    // if(productosFiltradosWave.length>0){ // Si hay elementos filtrados, cambia el valor de la variable categoriasSeleccionada a true
+    //     subcategoriasSeleccionadas2 = true;
+    // }
+    
+    //     if (subcategoriasSeleccionadas2){
+    //         productosFiltrados4 = productosFiltradosAc // CArga el array productosFiltrados2 con los datos de todas las subcategorias seleccionadas
+    //     } else{ // No hay subcategorias seleccionadas
+    //         productosFiltrados4 = productosFiltrados; // Carga el array productosFiltrados2 con los datos del primer nivel de filtros.
+    //     }
+    
+    
+
+
+
+
+
+console.log("click");
+console.log(productosFiltrados4);
+const contenedor = document.getElementById("Productos"); // Limpia el contenedor
+contenedor.innerHTML = ""; // Limpia el contenedor
+mostrarProductos(productosFiltrados4); 
+
+
+}
+
+// elementosFiltrarSubcategorias.forEach(elemento => {
+//     const checkbox = document.getElementById(elemento.toLowerCase());
+//     // console.log(elemento);
+
+//     if (checkbox.checked) {
+//         const productosFiltradosSubcategoria = productosFiltrados.filter(producto =>
+//             producto.subcategoria.toLowerCase() === elemento.toLowerCase()
+//         );
+
+//         productosFiltradosAc = [...productosFiltradosAc, ...productosFiltradosSubcategoria];
+//         subcategoriasSeleccionadas = true;
+//     }
+// });
+
+//     if (subcategoriasSeleccionadas){
+//         productosFiltrados2 = productosFiltradosAc // CArga el array productosFiltrados2 con los datos de todas las subcategorias seleccionadas
+//     } else{ // No hay subcategorias seleccionadas
+//         productosFiltrados2 = productosFiltrados; // Carga el array productosFiltrados2 con los datos del primer nivel de filtros.
+//     }
+
+// Tercer nivel de filtro: Por texto
+
+//     if(clave1.value!=""){
+//         productosFiltrados3 = productosFiltrados2.filter(producto => 
+//         producto.articulo.toLowerCase().includes(clave1.value.toLowerCase())||producto.descripcion.toLowerCase().includes(clave1.value.toLowerCase())
+//     );
+//     } else {
+//         productosFiltrados3 = productosFiltrados2;
+//     }
+//     const contenedor = document.getElementById("Productos");
+//     contenedor.innerHTML = ""; // Limpiar el contenedor
+//     mostrarProductos(productosFiltrados3); // Muestra los productos filtrados
+// }
+
+
 // AREA DE CARRITO
+// Area de definicion de variables
 let sumaDePrecios = 0;
 
 function cargarCarritoDelLocalStorage() { // Carga el carrito desde el LocalStorage
@@ -179,21 +250,28 @@ function agregarAlCarrito(articulo, precio) { //Agrega los elementos al carrito
     carrito.push({ articulo, precio}); // Agrega el elemento correspondiente al boton de Agregar al Carrito en el array carrito
     mostrarCarrito(carrito) // llama a la funcion mostrarCarrito
     guardarCarritoEnElLocalStorage()
+    Toastify({
+        text: `Agregaste ${articulo} al carrito!`,
+        duration: 3000,
+        gravity: 'top',
+        position: 'right'
+    }).showToast();
 }
 
 function mostrarCarrito(carrito) { // Muestra los productos en la seccion carrito
     let contenedor = document.getElementById("carrito"); // Guarda el elemento con el Id="carrito" en la variable contenedor
     contenedor.innerHTML = `<p id="carrito"class="textoCarrito">Carrito</p>`; // Vacía el carrito y vuelve a poner el título
     carrito.map(function(producto){ // Recorre el array de carrito con un map. Cumple con la consigna de utilizar MAP.
+        const {articulo, precio} = producto; // Asigna las propiedades articulo y precio a las variables articulo y precio - Cumple con la consigna de utilizar desestructuración
         contenedor = document.createElement("div");        
         contenedor.innerHTML = ""; // Vacía el contenedor
-        contenedor.innerHTML = `<h1> ${producto.articulo}</h1>
-                                <b> u$s ${producto.precio}</b>
+        contenedor.innerHTML = `<h1> ${articulo}</h1>
+                                <b> u$s ${precio}</b>
                                 <button class="btn btn-primary" onclick="quitarDelCarrito('${producto.articulo}', ${producto.precio})">Quitar del Carrito</button><br>`; //Define el innerHTML del elemento con una plantilla de texto// Agrega cada elemento del array carrito al contenido de la variable contenedor             
         contenedor.className += "cardcarrito"; // Agrega la clase a la variable contenedor
         document.getElementById("carrito").appendChild(contenedor); // Agrega la variable contenedor al elemento del carrito
         });
-        contenedorb = document.getElementById("totalCarrito"); // Guarda el elemento con el Id="totalCarrito" en la variable contenedor 
+        let contenedorb = document.getElementById("totalCarrito"); // Guarda el elemento con el Id="totalCarrito" en la variable contenedorb
         contenedorb.innerHTML = `<p>Total Carrito: u$s ${totalCarrito()}</p><br>` // Agrega el total del carrito
         let contenedorc = document.getElementById("vaciaCarrito"); // Agrega el boton de Checkout
         contenedorc.innerHTML = `<button class="btn btn-primary" onclick="vaciaCarrito()">Vaciar el carrito</button><br>`
@@ -205,7 +283,12 @@ function vaciaCarrito(){
     carrito = [];
     guardarCarritoEnElLocalStorage();
     mostrarCarrito(carrito) // Muestra el carrito con el producto ya eliminado
-
+    Toastify({
+        text: `Vaciaste el carrito!`,
+        duration: 3000,
+        gravity: 'top',
+        position: 'right'
+    }).showToast();    
 }
 
 function Checkout(){ // Abre la ventana de Chekout (no desarrollada, abre la homepage de Goya)
@@ -229,6 +312,12 @@ function quitarDelCarrito(articulo) { //Quita los articulos del carrito
     carrito.splice(indice, 1); // elimina el producto del carrito
     guardarCarritoEnElLocalStorage();
     mostrarCarrito(carrito) // Muestra el carrito con el producto ya eliminado
+    Toastify({
+        text: `Quitaste ${articulo} del carrito!`,
+        duration: 3000,
+        gravity: 'top',
+        position: 'right'
+    }).showToast();
 }
 
 

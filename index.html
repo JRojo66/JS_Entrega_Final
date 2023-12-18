@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="styles/styles.css">
     <title>Carrito de compras</title>
 </head>
@@ -18,18 +19,18 @@
             <input type="text" id="buscadorProducto" placeholder="Buscar producto..."> 
             <!-- Buscadores por checkbox-->
             <p> Marcá la categoría del producto buscado</p> 
-            <label><input type="checkbox" id="tablas" class="cbox" value="first_checkbox" /> Tablas</label><br />
-            <label><input type="checkbox" id="velas" class="cbox" value="first_checkbox" /> Velas</label><br/>
+            <label><input type="checkbox" id="Tabla" class="cbox" value="first_checkbox" /> Tablas</label><br />
+            <label><input type="checkbox" id="Vela" class="cbox" value="first_checkbox" /> Velas</label><br/>
             <br>
-            <label><input type="checkbox" id="wave" class="cbox" value="first_checkbox" /> Wave</label><br />
-            <label><input type="checkbox" id="freewave" class="cbox" value="first_checkbox" /> Freewave</label><br />
-            <label><input type="checkbox" id="freestyle" class="cbox" value="first_checkbox" /> Freestyle</label><br />
-            <label><input type="checkbox" id="foil"class="cbox" value="first_checkbox" /> Foil</label><br />
-            <label><input type="checkbox" id="race" class="cbox" value="first_checkbox" /> Race</label><br />
-            <label><input type="checkbox" id="freerace" class="cbox" value="first_checkbox" /> Freerace</label><br />
-            <label><input type="checkbox" id="freeride" class="cbox" value="first_checkbox" /> Freeride</label><br />
-            <label><input type="checkbox" id="youth" class="cbox" value="first_checkbox" /> Youth</label><br />
-            <label><input type="checkbox" id="trainer" class="cbox" value="first_checkbox" /> Trainer</label><br />
+            <label><input type="checkbox" id="Wave" class="cbox" value="first_checkbox" /> Wave</label><br />
+            <label><input type="checkbox" id="Freewave" class="cbox" value="first_checkbox" /> Freewave</label><br />
+            <label><input type="checkbox" id="Freestyle" class="cbox" value="first_checkbox" /> Freestyle</label><br />
+            <label><input type="checkbox" id="Foil"class="cbox" value="first_checkbox" /> Foil</label><br />
+            <label><input type="checkbox" id="Race" class="cbox" value="first_checkbox" /> Race</label><br />
+            <label><input type="checkbox" id="Freerace" class="cbox" value="first_checkbox" /> Freerace</label><br />
+            <label><input type="checkbox" id="Freeride" class="cbox" value="first_checkbox" /> Freeride</label><br />
+            <label><input type="checkbox" id="Youth" class="cbox" value="first_checkbox" /> Youth</label><br />
+            <label><input type="checkbox" id="Trainer" class="cbox" value="first_checkbox" /> Trainer</label><br />
         </div>
         <div id="Productos" class="cards"></div> <!-- Define la seccion de Productos. Los cards con los productos se agregan desde carrito.js-->
         <div class="carrito"> <!--Define la seccion del carrito. Los cards con los productos se agregan desde carrito.js-->
@@ -40,6 +41,7 @@
         </div>
     </main>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="JS/carrito.js"></script>    
 </body>
 </html>
