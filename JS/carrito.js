@@ -7,7 +7,7 @@ const localStorage = window.localStorage;
 // Trae los productos del archivo JSON/productos.json
 function ObtenerInformacionProductos(){
     return new Promise ((resolve,reject) => {
-        fetch('../JSON/productos.json')
+        fetch('./JSON/productos.json')
         .then(response=>{
             if(!response.ok){ 
                 throw new Error("Error al cargar la API, comunicate con el administrador");                
@@ -26,6 +26,9 @@ async function main(){
         productos = informacionProductos; //Asigna el array de objetos "productos" a la variable "productos"
     }catch(error){
         console.error("Error en la app :",error)
+    }
+    finally{
+        console.log("funcion procesada. Se obbtuvieron los productos buscados y se mostraron")
     }
 }
 
