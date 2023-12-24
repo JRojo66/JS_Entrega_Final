@@ -4,6 +4,8 @@ let carrito = [];
 let productos=[];
 const localStorage = window.localStorage;
 
+
+
 // Trae los productos del archivo JSON/productos.json
 function ObtenerInformacionProductos(){
     return new Promise ((resolve,reject) => {
