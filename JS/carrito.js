@@ -2,6 +2,8 @@
 //Tablas
 let carrito = [];
 let productos=[];
+let elementosFiltrarCategorias = [];
+let elementosFiltrarSubcategorias = [];
 const localStorage = window.localStorage;
 
 
@@ -11,8 +13,8 @@ function ObtenerInformacionProductos(){
     return new Promise ((resolve,reject) => {
         fetch('./JSON/productos.json')
         .then(response=>{
-            if(!response.ok){ 
-                throw new Error("Error al cargar la API, comunicate con el administrador");                
+            if(!response.ok){
+                throw new Error("Error al cargar la API, comunicate con el administrador");
             }
             return response.json();
         })
@@ -24,17 +26,21 @@ function ObtenerInformacionProductos(){
 async function main(){
     try{
         const informacionProductos = await ObtenerInformacionProductos()
-        mostrarProductos(informacionProductos) //crearCards(InformacionProductos) 
         productos = informacionProductos; //Asigna el array de objetos "productos" a la variable "productos"
-    }catch(error){
+        mostrarProductos(informacionProductos) //crearCards(InformacionProductos)
+        productos = informacionProductos; //Asigna el array de objetos "productos" a la variable "productos"
+        crearCategorias();
+        crearSubcategorias();
+    }
+    catch(error){
         console.error("Error en la app :",error)
     }
     finally{
-        console.log("funcion procesada. Se obbtuvieron los productos buscados y se mostraron")
+        console.log("Funcion procesada")
     }
 }
 
-main(); 
+main();
 // Agrega los productos a la pagina en cards. La clase contenedora es cards. La clase de cada card es card
 
 function mostrarProductos(productos) { // Muestra los productos en la seccion Productos
@@ -48,7 +54,7 @@ productos.map(function(producto){ // Recorre el array de productos con un map. C
                                 <b> u$s ${producto.precio}</b>
                                 <br>
                                 <button class="btn btn-primary" onclick="agregarAlCarrito('${producto.articulo}', ${producto.precio})">Agregar al Carrito</button><br>`; //Define el innerHTML del elemento con una plantilla de texto
-                                
+
         contenedor.className += "card";
         document.getElementById("Productos").appendChild(contenedor);
     });
@@ -56,22 +62,32 @@ productos.map(function(producto){ // Recorre el array de productos con un map. C
 
 mostrarProductos(productos)
 
+crearCategorias = () => {
+    elementosFiltrarCategorias = [...new Set(productos.map(producto => producto.categoria.toLowerCase()))];//Genera un array con las categorias
+    elementosFiltrarCategorias.forEach(elemento => { 
+        let contenedor = document.createElement("div");  // Crea un elemento div en una variable
+        contenedor.innerHTML = `<input type="checkbox" id=${elemento} class="cbox" value="first_checkbox"> ${elemento}</input>`; //Define el innerHTML del elemento con una plantilla de texto
+        document.getElementById("buscadores").appendChild(contenedor); // Agrega el elemento en la seccion de buscadores
+        const elementoDOM = document.getElementById(elemento); // Activa los EventListeners para las categorias creadas
+        elementoDOM.addEventListener("input", () => filtrarProductos());
+    });
+}
+
+crearSubcategorias = () => {
+    elementosFiltrarSubcategorias = [...new Set(productos.map(producto => producto.subcategoria.toLowerCase()))];//Genera un array con las categorias
+    elementosFiltrarSubcategorias.forEach(elemento => { 
+        let contenedor = document.createElement("div");  // Crea un elemento div en una variable
+        contenedor.innerHTML = `<input type="checkbox" id=${elemento} class="cbox" value="first_checkbox"> ${elemento}</input>`; //Define el innerHTML del elemento con una plantilla de texto
+        document.getElementById("buscadores").appendChild(contenedor); // Agrega el elemento en la seccion de buscadores
+        // const elementoDOM = document.getElementById(elemento); // Activa los EventListeners para las subcategorias creadas
+        // elementoDOM.addEventListener("input", () => filtrarProductos());
+    });
+}
+
+
 // AREA DE FILTRADO DE PRODUCTOS
 // Llama a la funcion filtrar productos cuando el usuario escribe en el cuadro de dialogo de buscar producto o selecciona un checkbox
 
-let elementosFiltrarCategorias = ["tabla", "vela"];
-
-elementosFiltrarCategorias.forEach(elemento => { // Activa los EventListeners de los checkbox Categorias
-    const elementoDOM = document.getElementById(elemento);
-    elementoDOM.addEventListener("input", () => filtrarProductos());
-});
-
-let elementosFiltrarSubcategorias = ["wave","freewave","freestyle","foil","race","freerace","freeride","youth","trainer"];
-
-elementosFiltrarSubcategorias.forEach(elemento => { // Activa los EventListeners de los checkbox Subcategorias
-    const elementoDOM = document.getElementById(elemento);
-    elementoDOM.addEventListener("input", () => filtrarProductos());
-});
 
 let clave1 = document.getElementById("buscadorProducto"); // buscador
 clave1.addEventListener("input",filtrarProductos);
@@ -79,66 +95,67 @@ clave1.addEventListener("input",filtrarProductos);
 
 function filtrarProductos(){
 
+
     // Area de definicion de variables para filtrarProductos
     let productosFiltrados = {};
     let productosFiltrados2 = {};
-    let productosFiltrados3 = [];    
+    let productosFiltrados3 = [];
     let categoriasSeleccionadas = false;
     let subcategoriasSeleccionadas = false;
-    let productosFiltradosAcCategorias = [];  
-    let productosFiltradosAcSubcategorias = [];  
+    let productosFiltradosAcCategorias = [];
+    let productosFiltradosAcSubcategorias = [];
 
-// Los filtros de productos funcionan en tres niveles en cascada. Primero se filtra por categorias. El resultado se filtra por subcategorias, y este segundo resultado se filtra por el texto ingresado 
+    // Los filtros de productos funcionan en tres niveles en cascada. Primero se filtra por categorias. El resultado se filtra por subcategorias, y este segundo resultado se filtra por el texto ingresado
 
-// Primer nivel de filtro: por categoria
+    // Primer nivel de filtro: por categoria
 
-elementosFiltrarCategorias.forEach(elemento => { // Trae los Checkbox de las Subcategorias
+    elementosFiltrarCategorias.forEach(elemento => { // Trae los Checkbox de las Subcategorias
     const checkbox = document.getElementById(elemento.toLowerCase());
-    
+
     if (checkbox.checked) { // Si hay algun checkbox marcado
         const productosFiltradosCategoria = productos.filter(producto => // Filtra por la subcategoria correspondiente
-            producto.categoria.toLowerCase() === elemento.toLowerCase()            
+            producto.categoria.toLowerCase() === elemento.toLowerCase()
         );
         productosFiltradosAcCategorias = [...productosFiltradosAcCategorias, ...productosFiltradosCategoria]; // Almacena los productos filtrados en un Acumulador
         categoriasSeleccionadas = true; // Avisa que hay alguna subcategoria seleccionada
-    }     
-});
+    }
+    });
 
-// Si hay alguna subcategoria seleccionada carga el acumulador de productos seleccionados, si no hay categorias seleccionadas, muestra todos los productos
-categoriasSeleccionadas? productosFiltrados = productosFiltradosAcCategorias: productosFiltrados = productos 
+    // Si hay alguna subcategoria seleccionada carga el acumulador de productos seleccionados, si no hay categorias seleccionadas, muestra todos los productos
+    categoriasSeleccionadas? productosFiltrados = productosFiltradosAcCategorias: productosFiltrados = productos
 
 
-// Segundo nivel de filtro: por subcategoria
+    // Segundo nivel de filtro: por subcategoria
 
-elementosFiltrarSubcategorias.forEach(elemento => { // Trae los Checkbox de las Subcategorias
+    elementosFiltrarSubcategorias.forEach(elemento => { // Trae los Checkbox de las Subcategorias
     const checkbox = document.getElementById(elemento.toLowerCase());
-    
+
     if (checkbox.checked) { // Si hay algun checkbox marcado
         const productosFiltradosSubcategoria = productosFiltrados.filter(producto => // Filtra por la subcategoria correspondiente
-            producto.subcategoria.toLowerCase() === elemento.toLowerCase()            
+            producto.subcategoria.toLowerCase() === elemento.toLowerCase()
         );
         productosFiltradosAcSubcategorias = [...productosFiltradosAcSubcategorias, ...productosFiltradosSubcategoria]; // Almacena los productos filtrados en un Acumulador
         subcategoriasSeleccionadas = true; // Avisa que hay alguna subcategoria seleccionada
-    }     
-});
+    }
+    });
 
-// Si hay alguna subcategoria seleccionada, carga el acumulador de productos seleccionados, si no hay subcategorias seleccionadas, muestra todos los productos
-subcategoriasSeleccionadas? productosFiltrados2 = productosFiltradosAcSubcategorias: productosFiltrados2 = productosFiltrados
+    // Si hay alguna subcategoria seleccionada, carga el acumulador de productos seleccionados, si no hay subcategorias seleccionadas, muestra todos los productos
+    subcategoriasSeleccionadas? productosFiltrados2 = productosFiltradosAcSubcategorias: productosFiltrados2 = productosFiltrados
 
 
-// Tercer nivel de filtro: Por texto
+    // Tercer nivel de filtro: Por texto
 
     if(clave1.value!=""){
-        productosFiltrados3 = productosFiltrados2.filter(producto => 
+        productosFiltrados3 = productosFiltrados2.filter(producto =>
         producto.articulo.toLowerCase().includes(clave1.value.toLowerCase())||producto.descripcion.toLowerCase().includes(clave1.value.toLowerCase())
     );
     } else {
          productosFiltrados3 = productosFiltrados2;
     }
 
-const contenedor = document.getElementById("Productos");
-contenedor.innerHTML = ""; // Limpiar el contenedor
-mostrarProductos(productosFiltrados3); 
+    const contenedor = document.getElementById("Productos");
+    contenedor.innerHTML = ""; // Limpiar el contenedor
+    mostrarProductos(productosFiltrados3);
 }
 
 
@@ -159,7 +176,7 @@ function guardarCarritoEnElLocalStorage() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-function agregarAlCarrito(articulo, precio) { //Agrega los elementos al carrito    
+function agregarAlCarrito(articulo, precio) { //Agrega los elementos al carrito
     carrito.push({ articulo, precio}); // Agrega el elemento correspondiente al boton de Agregar al Carrito en el array carrito
     mostrarCarrito(carrito) // llama a la funcion mostrarCarrito
     guardarCarritoEnElLocalStorage()
@@ -176,21 +193,21 @@ function mostrarCarrito(carrito) { // Muestra los productos en la seccion carrit
     contenedor.innerHTML = `<p id="carrito"class="textoCarrito">Carrito</p>`; // Vacía el carrito y vuelve a poner el título
     carrito.map(function(producto){ // Recorre el array de carrito con un map. Cumple con la consigna de utilizar MAP.
         const {articulo, precio} = producto; // Desestructura el contenido del carrito. Cumple la consigna de desestructurar.
-        contenedor = document.createElement("div");        
+        contenedor = document.createElement("div");
         contenedor.innerHTML = ""; // Vacía el contenedor
         contenedor.innerHTML = `<h1> ${articulo}</h1>
                                 <b> u$s ${precio}</b>
-                                <button class="btn btn-primary" onclick="quitarDelCarrito('${articulo}', ${precio})">Quitar del Carrito</button><br>`; //Define el innerHTML del elemento con una plantilla de texto// Agrega cada elemento del array carrito al contenido de la variable contenedor             
+                                <button class="btn btn-primary" onclick="quitarDelCarrito('${articulo}', ${precio})">Quitar del Carrito</button><br>`; //Define el innerHTML del elemento con una plantilla de texto// Agrega cada elemento del array carrito al contenido de la variable contenedor
         contenedor.className += "cardcarrito"; // Agrega la clase a la variable contenedor
         document.getElementById("carrito").appendChild(contenedor); // Agrega la variable contenedor al elemento del carrito
         });
-        contenedorb = document.getElementById("totalCarrito"); // Guarda el elemento con el Id="totalCarrito" en la variable contenedor 
+        contenedorb = document.getElementById("totalCarrito"); // Guarda el elemento con el Id="totalCarrito" en la variable contenedor
         contenedorb.innerHTML = `<p>Total Carrito: u$s ${totalCarrito()}</p><br>` // Agrega el total del carrito
         let contenedorc = document.getElementById("vaciaCarrito"); // Agrega el boton de Checkout
         contenedorc.innerHTML = `<button class="btn btn-primary" onclick="vaciaCarrito()">Vaciar el carrito</button><br>`
        let contenedord = document.getElementById("checkOut"); // Agrega el boton de Checkout
         contenedord.innerHTML = `<button class="btn btn-primary" onclick="Checkout()">Checkout</button><br>`
-    }
+}
 
 function vaciaCarrito(){ // Vacia el carrito
     carrito = []; // Vacia el carrito
@@ -201,14 +218,13 @@ function vaciaCarrito(){ // Vacia el carrito
         duration: 3000,
         gravity: 'top',
         position: 'right'
-    }).showToast();    
-
+    }).showToast();
 }
 
 function Checkout(){ // Abre la ventana de Chekout (no desarrollada, abre la homepage de Goya)
     // Abrir nuevo tab
     let win = window.open('https://goyawindsurfing.com/', '_blank');
-    win.focus();    
+    win.focus();
     guardarCarritoEnElLocalStorage();
     mostrarCarrito(carrito) // Muestra el carrito con el producto ya eliminado
 }
@@ -216,7 +232,7 @@ function Checkout(){ // Abre la ventana de Chekout (no desarrollada, abre la hom
 function totalCarrito(){ // Calcula el precio total del carrito
     const sumaDePrecios = carrito.reduce((total, producto) => total + producto.precio, 0);
     return(sumaDePrecios);
-    }
+}
 
 function quitarDelCarrito(articulo) { //Quita los articulos del carrito
     const indice = carrito.findIndex(producto => producto.articulo === articulo);// Busca el articulo seleccionado para eliminar

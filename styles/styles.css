@@ -1,5 +1,5 @@
-img{
-    margin: 1%;
+img{ /* Establece el tamaño y margen de las imagenes*/
+    margin: 1%; 
     width: 10vw;
     height: 5vh;
 }
@@ -71,4 +71,8 @@ p, .cbox{
 }
 .textoCarrito{
     margin-right: 5vw;;
+}
+
+#wave{
+    color: red;
 }
