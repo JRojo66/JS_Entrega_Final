@@ -2,6 +2,7 @@
 //Tablas
 let carrito = [];
 let productos=[];
+let pedidos = [];
 let elementosFiltrarCategorias = [];
 let elementosFiltrarSubcategorias = [];
 const localStorage = window.localStorage;
@@ -36,31 +37,17 @@ async function main(){
         console.error("Error en la app :",error)
     }
     finally{
-        console.log("Funcion procesada")
+        Toastify({ // Toast productos cargados
+            text: `Estos son los productos disponibles`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'center'
+        }).showToast();
     }
 }
 
 main();
 // Agrega los productos a la pagina en cards. La clase contenedora es cards. La clase de cada card es card
-
-function mostrarProductos(productos) { // Muestra los productos en la seccion Productos
-    document.body.appendChild(document.createElement("div")) // Agrega un div en el DOM
-productos.map(function(producto){ // Recorre el array de productos con un map. Cumple con la consigna de utilizar MAP.
-        let contenedor = document.createElement("div");  // Crea un elemento div en una variable
-        contenedor.innerHTML = `<h1> ${producto.articulo}</h1>
-                                <h2>  ${producto.descripcion}</h2>
-                                <img src="${producto.foto}" class="foto" alt="Imagen de ${producto.articulo}">
-                                <br><br>
-                                <b> u$s ${producto.precio}</b>
-                                <br>
-                                <button class="btn btn-primary" onclick="agregarAlCarrito('${producto.articulo}', ${producto.precio})">Agregar al Carrito</button><br>`; //Define el innerHTML del elemento con una plantilla de texto
-
-        contenedor.className += "card";
-        document.getElementById("Productos").appendChild(contenedor);
-    });
-}
-
-mostrarProductos(productos)
 
 crearCategorias = () => {
     elementosFiltrarCategorias = [...new Set(productos.map(producto => producto.categoria.toLowerCase()))];//Genera un array con las categorias
@@ -79,11 +66,31 @@ crearSubcategorias = () => {
         let contenedor = document.createElement("div");  // Crea un elemento div en una variable
         contenedor.innerHTML = `<input type="checkbox" id=${elemento} class="cbox" value="first_checkbox"> ${elemento}</input>`; //Define el innerHTML del elemento con una plantilla de texto
         document.getElementById("buscadores").appendChild(contenedor); // Agrega el elemento en la seccion de buscadores
-        // const elementoDOM = document.getElementById(elemento); // Activa los EventListeners para las subcategorias creadas
-        // elementoDOM.addEventListener("input", () => filtrarProductos());
+        const elementoDOM = document.getElementById(elemento); // Activa los EventListeners para las subcategorias creadas
+        elementoDOM.addEventListener("input", () => filtrarProductos());
     });
 }
 
+
+function mostrarProductos(productos) { // Muestra los productos en la seccion Productos
+    document.body.appendChild(document.createElement("div")) // Agrega un div en el DOM
+productos.map(function(producto){ // Recorre el array de productos con un map. Cumple con la consigna de utilizar MAP.
+        let contenedor = document.createElement("div");  // Crea un elemento div en una variable
+        contenedor.innerHTML = `<h1> ${producto.articulo}</h1>
+                                <h2>  ${producto.descripcion}</h2>
+                                <img src="${producto.foto}" class="foto" alt="Imagen de ${producto.articulo}">
+                                <br><br>
+                                <b> u$s ${producto.precio}</b>
+                                <br>
+                                <button class="btn btn-primary" onclick="agregarAlCarrito('${producto.articulo}', ${producto.precio})">Agregar al Carrito</button><br>`; //Define el innerHTML del elemento con una plantilla de texto
+
+        contenedor.className += "card";
+        document.getElementById("Productos").appendChild(contenedor);
+    });
+}
+
+
+mostrarProductos(productos)
 
 // AREA DE FILTRADO DE PRODUCTOS
 // Llama a la funcion filtrar productos cuando el usuario escribe en el cuadro de dialogo de buscar producto o selecciona un checkbox
@@ -177,7 +184,19 @@ function guardarCarritoEnElLocalStorage() {
 }
 
 function agregarAlCarrito(articulo, precio) { //Agrega los elementos al carrito
-    carrito.push({ articulo, precio}); // Agrega el elemento correspondiente al boton de Agregar al Carrito en el array carrito
+    const indice = carrito.findIndex(producto => producto.articulo === articulo); // Busca si el elemento existe en el carrito
+    if (indice === -1) { // Si no existe
+        cantidad = 1; 
+        carrito.push({ articulo, precio, cantidad}); // Agrega un elemento al carrito
+    } else { // Si existe
+        carrito[indice].cantidad += 1; // Suma uno a la cantidad existente
+        Toastify({ // Toast el producto ya existía
+            text: `El producto ${articulo} ya existía en el carrito! Se sumo una unidad`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'right'
+        }).showToast();
+    }
     mostrarCarrito(carrito) // llama a la funcion mostrarCarrito
     guardarCarritoEnElLocalStorage()
     Toastify({ // Toast agregaste articulo al carrito
@@ -192,16 +211,20 @@ function mostrarCarrito(carrito) { // Muestra los productos en la seccion carrit
     let contenedor = document.getElementById("carrito"); // Guarda el elemento con el Id="carrito" en la variable contenedor
     contenedor.innerHTML = `<p id="carrito"class="textoCarrito">Carrito</p>`; // Vacía el carrito y vuelve a poner el título
     carrito.map(function(producto){ // Recorre el array de carrito con un map. Cumple con la consigna de utilizar MAP.
-        const {articulo, precio} = producto; // Desestructura el contenido del carrito. Cumple la consigna de desestructurar.
+        const {articulo, precio, cantidad} = producto; // Desestructura el contenido del carrito. Cumple la consigna de desestructurar.
         contenedor = document.createElement("div");
         contenedor.innerHTML = ""; // Vacía el contenedor
         contenedor.innerHTML = `<h1> ${articulo}</h1>
-                                <b> u$s ${precio}</b>
-                                <button class="btn btn-primary" onclick="quitarDelCarrito('${articulo}', ${precio})">Quitar del Carrito</button><br>`; //Define el innerHTML del elemento con una plantilla de texto// Agrega cada elemento del array carrito al contenido de la variable contenedor
+                                <b> u$s ${precio} - cantidad: ${cantidad}</b>
+                                <button class="btn btn-primary" onclick="quitarDelCarrito('${articulo}', ${precio}, ${cantidad})">Quitar del Carrito</button><br>
+                                <div class="masmenos">
+                                <button id="mas" onclick="agregaItem(${carrito.indexOf(producto)})">+</button>
+                                <button id="menos" onclick="restaItem(${carrito.indexOf(producto)})">-</button>
+                            </div>`; //Define el innerHTML del elemento con una plantilla de texto/. Agrega cada elemento del array carrito al contenido de la variable contenedor. Agrega los botones + y -
         contenedor.className += "cardcarrito"; // Agrega la clase a la variable contenedor
         document.getElementById("carrito").appendChild(contenedor); // Agrega la variable contenedor al elemento del carrito
         });
-        contenedorb = document.getElementById("totalCarrito"); // Guarda el elemento con el Id="totalCarrito" en la variable contenedor
+        let contenedorb = document.getElementById("totalCarrito"); // Guarda el elemento con el Id="totalCarrito" en la variable contenedor
         contenedorb.innerHTML = `<p>Total Carrito: u$s ${totalCarrito()}</p><br>` // Agrega el total del carrito
         let contenedorc = document.getElementById("vaciaCarrito"); // Agrega el boton de Checkout
         contenedorc.innerHTML = `<button class="btn btn-primary" onclick="vaciaCarrito()">Vaciar el carrito</button><br>`
@@ -221,12 +244,57 @@ function vaciaCarrito(){ // Vacia el carrito
     }).showToast();
 }
 
-function Checkout(){ // Abre la ventana de Chekout (no desarrollada, abre la homepage de Goya)
-    // Abrir nuevo tab
-    let win = window.open('https://goyawindsurfing.com/', '_blank');
-    win.focus();
-    guardarCarritoEnElLocalStorage();
-    mostrarCarrito(carrito) // Muestra el carrito con el producto ya eliminado
+function Checkout(){ // Abre el formulario de Checkout cuando se selecciona Checkout
+    let formulario = document.getElementById("miFormulario")
+    formulario.addEventListener("input",desplegarFormulario())
+}
+
+function desplegarFormulario(){ // Muestra el formulario
+    let formulario = document.getElementById("miFormulario");
+    formulario.removeAttribute("hidden");
+    formulario.addEventListener("submit", guardarDatos);
+}
+
+function guardarDatos(event){
+    event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+    let nombre = document.getElementById("nombre").value.trim();
+    let email = document.getElementById("email").value.trim();
+    if (!nombre || !email) { // valida que se hayan ingresado Nombre e email. 
+        // Si nombre o email están vacíos, muestra un mensaje y no procesa el formulario
+        return;
+    }
+    if (!/^[a-zA-Z\s]+$/.test(nombre)) {
+        Toastify({
+            text: "Por favor, ingresa un nombre válido con solo letras.",
+            duration: 3000,
+            gravity: "top",
+            position: "right"
+        }).showToast();
+        return;
+    }
+
+    // Validación del correo electrónico (formato válido)
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+        Toastify({
+            text: "Por favor, ingresa un correo electrónico válido.",
+            duration: 3000,
+            gravity: "top",
+            position: "right"
+        }).showToast();
+        return;
+    }
+    pedidos.push(nombre,email,carrito); // Guarda el pedido en array
+    event.target.reset();
+    let formulario = document.getElementById("miFormulario");
+    formulario.setAttribute("hidden", "true");
+    localStorage.setItem("pedidos", JSON.stringify(pedidos)); // Guarda los pedidos en el localStorage
+    Toastify({ // Toast pedido enviado
+        text: `Tu pedido ha sido registrado, te contactaremos en breve!`,
+        duration: 8000,
+        gravity: 'top',
+        position: 'right'
+    }).showToast();
+    vaciaCarrito(); // Vacia el carrito
 }
 
 function totalCarrito(){ // Calcula el precio total del carrito
@@ -245,6 +313,20 @@ function quitarDelCarrito(articulo) { //Quita los articulos del carrito
         gravity: 'top',
         position: 'right'
     }).showToast();
+}
+
+function agregaItem(indice){
+    carrito[indice].cantidad += 1; // Incrementa la cantidad en 1
+    mostrarCarrito(carrito); // Actualiza la interfaz mostrando el carrito
+    guardarCarritoEnElLocalStorage(); // Guarda el carrito actualizado en el LocalStorage
+}
+
+function restaItem(indice){
+    if(carrito[indice].cantidad>1){
+        carrito[indice].cantidad -= 1; // Incrementa la cantidad en 1
+        mostrarCarrito(carrito); // Actualiza la interfaz mostrando el carrito
+        guardarCarritoEnElLocalStorage(); // Guarda el carrito actualizado en el LocalStorage
+    }
 }
 
 

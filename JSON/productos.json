@@ -28,6 +28,6 @@
     { "articulo": "Freerace Mark",  "categoria": "Vela", "subcategoria": "Freerace", "descripcion": "Freerace 6 Batten", "foto":"images/velas/2022_Goya_Windsurfing_Mark_ROY.jpg", "precio": 1000},
     { "articulo": "Freeride Nexus B",  "categoria": "Vela", "subcategoria": "Freeride", "descripcion": "Freeride 5 Batten", "foto":"images/velas/2022_Goya_Windsurfing_Nexus_B_YYP.jpg", "precio": 1200},
     { "articulo": "Freeride Nexus",  "categoria": "Vela", "subcategoria": "Freeride", "descripcion": "Freeride 5 Batten", "foto":"images/velas/2022_Goya_Windsurfing_Nexus_BBY.jpg", "precio": 1200},
-    { "articulo": "Youth Scion X",  "categoria": "Vela", "subcategoria": "Youth Scion X", "descripcion": "Youth 3 Batten", "foto":"images/velas/2022_Goya_Windsurfing_Scion_X_ROY.jpg", "precio": 1200},
-    { "articulo": "Trainer Surf",  "categoria": "Vela", "subcategoria": "Trainer Surf", "descripcion": "Trainer 1 to 3 Batten", "foto":"images/velas/2022_Goya_Windsurfing_Surf_2_OOY.jpg", "precio": 1200}
+    { "articulo": "Youth Scion X",  "categoria": "Vela", "subcategoria": "Youth_Scion_X", "descripcion": "Youth 3 Batten", "foto":"images/velas/2022_Goya_Windsurfing_Scion_X_ROY.jpg", "precio": 1200},
+    { "articulo": "Trainer Surf",  "categoria": "Vela", "subcategoria": "Trainer_Surf", "descripcion": "Trainer 1 to 3 Batten", "foto":"images/velas/2022_Goya_Windsurfing_Surf_2_OOY.jpg", "precio": 1200}
 ]
