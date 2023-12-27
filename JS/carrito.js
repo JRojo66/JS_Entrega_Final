@@ -155,9 +155,9 @@ function filtrarProductos(){
 
     // Tercer nivel de filtro: Por texto
 
-    if(clave1.value!=""){
+    if(clave1.value!=""){ // Filtra por texto
         productosFiltrados3 = productosFiltrados2.filter(producto =>
-        producto.articulo.toLowerCase().includes(clave1.value.toLowerCase())||producto.descripcion.toLowerCase().includes(clave1.value.toLowerCase())
+        producto.articulo.toLowerCase().includes(clave1.value.toLowerCase())||producto.descripcion.toLowerCase().includes(clave1.value.toLowerCase()) // Cumple la consigna de uso del operador ||
     );
     } else {
         productosFiltrados3 = productosFiltrados2;
