@@ -31,6 +31,9 @@ async function main(){
         mostrarProductos(informacionProductos) //crearCards(InformacionProductos)
         productos = informacionProductos; //Asigna el array de objetos "productos" a la variable "productos"
         crearCategorias();
+        let contenedor = document.createElement("div");  // Crea un elemento div en una variable
+        contenedor.innerHTML = `<br>`; //Define el innerHTML del elemento con un break
+        document.getElementById("buscadores").appendChild(contenedor); // Agrega el elemento en la seccion de buscadores
         crearSubcategorias();
     }
     catch(error){
@@ -157,7 +160,7 @@ function filtrarProductos(){
         producto.articulo.toLowerCase().includes(clave1.value.toLowerCase())||producto.descripcion.toLowerCase().includes(clave1.value.toLowerCase())
     );
     } else {
-         productosFiltrados3 = productosFiltrados2;
+        productosFiltrados3 = productosFiltrados2;
     }
 
     const contenedor = document.getElementById("Productos");
@@ -208,28 +211,44 @@ function agregarAlCarrito(articulo, precio) { //Agrega los elementos al carrito
 }
 
 function mostrarCarrito(carrito) { // Muestra los productos en la seccion carrito
+    const cantidadItems = carrito.reduce((total, producto) => total + producto.cantidad, 0);
     let contenedor = document.getElementById("carrito"); // Guarda el elemento con el Id="carrito" en la variable contenedor
-    contenedor.innerHTML = `<p id="carrito"class="textoCarrito">Carrito</p>`; // Vacía el carrito y vuelve a poner el título
+    contenedor.innerHTML = `<div class="contenedorCarrito"><img src="images/shopping-cart.png" id="carrito" class="Carrito"><p class="cantidadItems">${cantidadItems}</p></div>`; // Vacía el carrito y vuelve a poner el título
     carrito.map(function(producto){ // Recorre el array de carrito con un map. Cumple con la consigna de utilizar MAP.
         const {articulo, precio, cantidad} = producto; // Desestructura el contenido del carrito. Cumple la consigna de desestructurar.
         contenedor = document.createElement("div");
         contenedor.innerHTML = ""; // Vacía el contenedor
-        contenedor.innerHTML = `<h1> ${articulo}</h1>
-                                <b> u$s ${precio} - cantidad: ${cantidad}</b>
-                                <button class="btn btn-primary" onclick="quitarDelCarrito('${articulo}', ${precio}, ${cantidad})">Quitar del Carrito</button><br>
-                                <div class="masmenos">
-                                <button id="mas" onclick="agregaItem(${carrito.indexOf(producto)})">+</button>
-                                <button id="menos" onclick="restaItem(${carrito.indexOf(producto)})">-</button>
-                            </div>`; //Define el innerHTML del elemento con una plantilla de texto/. Agrega cada elemento del array carrito al contenido de la variable contenedor. Agrega los botones + y -
+        if(cantidad!==1){
+            contenedor.innerHTML = `<h1> ${articulo}</h1>
+                                    <b> u$s ${precio} - cantidad: ${cantidad}</b>
+                                    <div class="masmenos">
+                                        <div>
+                                            <button id="mas" onclick="agregaItem(${carrito.indexOf(producto)})">+</button>
+                                            <button id="menos" onclick="restaItem(${carrito.indexOf(producto)})">-</button>
+                                        </div>
+                                    <div>
+                                        <button class="btn btn-primary" onclick="quitarDelCarrito('${articulo}', ${precio}, ${cantidad})">Quitar del Carrito</button><br>
+                                    </div>`; //Define el innerHTML del elemento con una plantilla de texto/. Agrega cada elemento del array carrito al contenido de la variable contenedor. Agrega los botones + y -
+        } else{
+            contenedor.innerHTML = `<h1> ${articulo}</h1>
+                                    <b> u$s ${precio} - cantidad: ${cantidad}</b>
+                                    <div class="masmenos">
+                                        <div>
+                                            <button id="mas" onclick="agregaItem(${carrito.indexOf(producto)})">+</button>
+                                        </div>
+                                    <div>
+                                        <button class="btn btn-primary" onclick="quitarDelCarrito('${articulo}', ${precio}, ${cantidad})">Quitar del Carrito</button><br>
+                                    </div>`; //Define el innerHTML del elemento con una plantilla de texto/. Agrega cada elemento del array carrito al contenido de la variable contenedor. Agrega los botones + y -
+        }
         contenedor.className += "cardcarrito"; // Agrega la clase a la variable contenedor
         document.getElementById("carrito").appendChild(contenedor); // Agrega la variable contenedor al elemento del carrito
         });
         let contenedorb = document.getElementById("totalCarrito"); // Guarda el elemento con el Id="totalCarrito" en la variable contenedor
         contenedorb.innerHTML = `<p>Total Carrito: u$s ${totalCarrito()}</p><br>` // Agrega el total del carrito
         let contenedorc = document.getElementById("vaciaCarrito"); // Agrega el boton de Checkout
-        contenedorc.innerHTML = `<button class="btn btn-primary" onclick="vaciaCarrito()">Vaciar el carrito</button><br>`
+        contenedorc.innerHTML = `<div class="centrarBoton"><button class="btn btn-primary" onclick="vaciaCarrito()">Vaciar el carrito</button><br></div>`
        let contenedord = document.getElementById("checkOut"); // Agrega el boton de Checkout
-        contenedord.innerHTML = `<button class="btn btn-primary" onclick="Checkout()">Checkout</button><br>`
+        contenedord.innerHTML = `<div class="centrarBoton"><button class="btn btn-primary" onclick="Checkout()">Checkout</button><br></div>`
 }
 
 function vaciaCarrito(){ // Vacia el carrito

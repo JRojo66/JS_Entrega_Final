@@ -37,6 +37,7 @@ img{ /* Establece el tamaño y margen de las imagenes*/
     display: flex; /* Establece la disposicion de los elementos dentro de cada card*/
     flex-direction: column; /* Establece que los elementos dentro de cada card esten encolumnados*/
     align-items: center; /* Centra los elementos dentro de cada card*/
+    margin-bottom: 1vh; /*Separa los elementos del carrito verticalmente*/
 }
 
 
@@ -69,10 +70,59 @@ p, .cbox{
 .carrito{
     width: 20 vw;
 }
-.textoCarrito{
+.Carrito{
+    width: 5vw;
     margin-right: 5vw;;
 }
 
-#wave{
-    color: red;
+#mas, #menos  {
+    width: 4vw;
+    margin: 1vw;
+    border-radius: 50px;
+    background-color: #0D6EFD;
+    color: white
+    
+}
+
+.btn{
+    margin-bottom: 10px;
+}
+
+.centrarBoton {
+    display: flex;
+    justify-content: center;
+}
+
+#nombre, #email {
+    font-size: 2vw;
+    border-color: black;
+    border-radius: 10px;
+    margin: 3px;
+}
+.contenedorCarrito {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.Carrito {
+    width: 50px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: auto; /* Para mantener la proporción original */
+    margin-right: 10px; /* Espacio entre la imagen y la cantidad */
+}
+
+.cantidadItems {
+    position: absolute;
+    top: 20px;
+    right: 75px;
+    width: 30px;
+    height: 30px;
+    color: white;
+    background-color: red;
+    border-radius: 50%; /* Para hacer un círculo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px; /* Ajusta el tamaño del texto según sea necesario */
 }
