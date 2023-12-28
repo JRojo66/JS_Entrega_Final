@@ -317,7 +317,7 @@ function guardarDatos(event){
 }
 
 function totalCarrito(){ // Calcula el precio total del carrito
-    const sumaDePrecios = carrito.reduce((total, producto) => total + producto.precio, 0);
+    const sumaDePrecios = carrito.reduce((total, producto) => total + (producto.precio*producto.cantidad), 0);
     return(sumaDePrecios);
 }
 
